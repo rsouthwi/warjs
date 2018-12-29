@@ -174,26 +174,28 @@ function shuffleCards(deck) {
 class GameOfWar {
 	constructor(players) {
 		this.players = players || [];
+		this.activePlayers = [];
 		this.deck = [];
 		this.whoseTurn;
+		this.hasYetToPlay = [];
 		this.gameStarted = false;
 		this.round = 0;
-		this.resetRound()
 	}
 
 	resetRound() {
-		this.hasYetToPlay = [];
 		this.spoils = []; // these are the cards to be collected by the winner
 		this.cardsPlayed = {};	
-		this.activePlayers = [];
 		this.round ++;
 
+		// reset who is active
+		this.activePlayers = [];
 		for (let i=0; i<this.players.length; i++) {
 			if (this.players[i].isActive) {
 				this.activePlayers.push(this.players[i]);
 				this.canPlayCard(i);
 			}
 		}	
+		this.hasYetToPlay = this.activePlayers.slice();
 	}
 
 	allEqualNumberOfCards() {
@@ -201,6 +203,7 @@ class GameOfWar {
 	}
 
 	createPlayers() {
+		let game = this;
 		let numberOfPlayers = window.prompt("Enter Number of Players", 2)
 		let integerOfPlayers = parseInt(numberOfPlayers, 10);
 		if (!Number.isInteger(integerOfPlayers) ||
@@ -214,8 +217,6 @@ class GameOfWar {
 			newPlayer.human = window.confirm("Is this Player a human?");
 			this.players.push(newPlayer);
 			newPlayer.index = this.players.indexOf(newPlayer);
-			this.activePlayers.push(newPlayer);
-			let game = this;
 
 			playerOutDispatcher.watchPlayer(newPlayer, function() {
 				let index = game.activePlayers.indexOf(newPlayer);
@@ -313,6 +314,7 @@ class GameOfWar {
 		this.dealDeck();
 		this.hasYetToPlay = this.players.slice();
 		this.createBoard();
+		this.resetRound();
 	}
 
 	nextPlayer() {
@@ -345,18 +347,33 @@ class GameOfWar {
 		this.gameStarted = true;
 	}
 
+	_playerPlay(playerIndex) {
+		let game = this;
+		return function() {
+			game.players[playerIndex].playCard();
+		}
+	}
+
 	hasPlayedCard(playerIndex) {
 		this.hasYetToPlay.splice(playerIndex, 1);
 		let UI_playerDiv = document.getElementById('player_' + playerIndex);
-		let UI_discardPileDiv = UI_playerDiv.querySelector('.drawPile');
-		UI_discardPileDiv.classList.add('inactive');
+		let UI_drawPileDiv = UI_playerDiv.querySelector('.drawPile');
+		let game = this; 
+
+		UI_drawPileDiv.removeEventListener('click', this._playerPlay(playerIndex));
+		UI_drawPileDiv.classList.add('inactive');
 	}
 
 	canPlayCard(playerIndex) {
 		let UI_playerDiv = document.getElementById('player_' + playerIndex);
-		let UI_discardPileDiv = UI_playerDiv.querySelector('.drawPile');
-		UI_discardPileDiv.classList.remove('inactive');
-		this.players[playerIndex].canPlayThisRound = true;
+		let UI_drawPileDiv = UI_playerDiv.querySelector('.drawPile');
+		let game = this;
+
+		setTimeout( function() {
+			UI_drawPileDiv.addEventListener("click", game._playerPlay(playerIndex));
+			UI_drawPileDiv.classList.remove('inactive');
+			game.players[playerIndex].canPlayThisRound = true;
+		}, 100)
 	}
 
 	conductWar(players) {
@@ -446,13 +463,6 @@ class GameOfWar {
 		
 		if (this.activePlayers.length === 1) {
 			this.gameOver(this.activePlayers[0]);
-		}  else  {
-			this.hasYetToPlay = this.activePlayers.slice();
-
-			for (let i=0; i<this.activePlayers.length; i++) {
-				let playerIndex = this.activePlayers[i].index;
-				this.canPlayCard(playerIndex)
-			}
 		}
 	}
 
