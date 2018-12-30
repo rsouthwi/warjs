@@ -1,0 +1,65 @@
+.card {
+	height: 75px;
+	width: 60px;
+	border: solid 2px #000000;
+	border-radius: 10px;
+	background-color: #ffffee;
+	overflow: hidden;
+	/*margin: 6px auto;*/
+}				
+.value {
+	position: absolute;
+	font-family: Times;
+	font-weight: bold;
+	font-size: 32px;
+	bottom: -34px;
+	left: 3px;
+}		
+.suit {
+	position: absolute;
+	font-size: 65px;
+	top: -12px;
+	right: 0px;
+}				
+.red { color: red; }
+.black { color: black; }
+.inactive { opacity: 0.2; }
+
+.playAreaSpacer { height: 100px; }
+.drawPile { 
+	display: block;
+	/*position: relative; */
+	padding: 6px;
+	height: 80px;
+}
+
+.none { 
+	display: inline-block; 
+	background-color: #ffffff;
+	border: dotted 1px #888888;
+}
+.face { position: relative }
+.back {
+	display: inline-block;
+	bottom: 0px;
+	background-color: #dddd00;
+	background-image:
+	repeating-linear-gradient(120deg, rgba(0,0,255,.1), rgba(0,0,255,.1) 2px, transparent 1px, transparent 16px),
+	repeating-linear-gradient(60deg, rgba(0,0,255,.1), rgba(0,0,255,.1) 2px, transparent 1px, transparent 16px),
+	linear-gradient(60deg, rgba(255,0,0,.1) 25%, transparent 25%, transparent 75%, rgba(255,0,0,.1) 75%, rgba(255,0,0,.1)),
+	linear-gradient(120deg, rgba(255,0,0,.1) 25%, transparent 25%, transparent 75%, rgba(255,0,0,.1) 75%, rgba(255,0,0,.1));
+	background-size: 21px 32px;
+}
+
+.playerBox {
+	width: 160px;
+	border: solid 1px black;
+	align-content: center;
+	align-items: center;
+	text-align: center;
+	position: relative;
+}
+.gameArea {
+	display: flex;
+	border: 1px solid #999999;
+}
