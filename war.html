@@ -1,119 +1,13 @@
 <html>
 	<head>
 		<script src="js/war.js"></script>
+		<link rel="stylesheet" href="css/war.css">
 
 		<style>
-			.card {
-				height: 75px;
-				width: 60px;
-				border: solid 2px #000000;
-				border-radius: 10px;
-				background-color: #ffffee;
-				overflow: hidden;
-				/*margin: 6px auto;*/
-			}
-			.valueNew {
-				color: #ffffee;
-				position: absolute;
-				font-family: Times;
-				font-weight: bold;
-				font-size: 40px;
-				bottom: -34px;
-				left: 2px;
-				z-index: 1;
-			}		
-			.suitNew {
-				position: absolute;
-				font-size: 135px;
-				top: -28px;
-				right: -8px;
-			}				
-			.value {
-				position: absolute;
-				font-family: Times;
-				font-weight: bold;
-				font-size: 32px;
-				bottom: -34px;
-				left: 3px;
-			}		
-			.suit {
-				position: absolute;
-				font-size: 65px;
-				top: -12px;
-				right: 0px;
-			}				
-			.valueOld {
-				margin: -8px 3px -2px 5px;
-				font-family: Times;
-				font-weight: bold;
-				font-size: 65px;
-			}
-			.suitOld {
-				position: absolute;
-				font-size: 25px;
-				bottom: -5px;
-				left: 40px;
-			}
-			.red { color: red; }
-			.black { color: black; }
-			.inactive { opacity: 0.2; }
-			.playAreaSpacer { height: 100px; }
-			.drawPile { 
-				display: block;
-				/*position: relative; */
-				padding: 6px;
-				height: 80px;
+			.spoils {
+				transform: translate(-3em,1em); 
 			}
 
-			.none { 
-				display: inline-block; 
-				background-color: #ffffff;
-				border: dotted 1px #888888;
-			}
-			.face { position: relative }
-			.back {
-				display: inline-block;
-				bottom: 0px;
-				background-color: #dddd00;
-				background-image:
-				repeating-linear-gradient(120deg, rgba(0,0,255,.1), rgba(0,0,255,.1) 2px, transparent 1px, transparent 16px),
-				repeating-linear-gradient(60deg, rgba(0,0,255,.1), rgba(0,0,255,.1) 2px, transparent 1px, transparent 16px),
-				linear-gradient(60deg, rgba(255,0,0,.1) 25%, transparent 25%, transparent 75%, rgba(255,0,0,.1) 75%, rgba(255,0,0,.1)),
-				linear-gradient(120deg, rgba(255,0,0,.1) 25%, transparent 25%, transparent 75%, rgba(255,0,0,.1) 75%, rgba(255,0,0,.1));
-				background-size: 21px 32px;
-			}
-
-			.playerBox {
-				width: 160px;
-				border: solid 1px black;
-				align-content: center;
-				align-items: center;
-				text-align: center;
-				position: relative;
-			}
-			.playerBox button {
-			  margin: 2px;
-			  border: 1px solid #0066cc;
-			  background-color: #0099cc;
-			  color: #ffffff;
-			  padding: 5px 10px;
-			}
-			.playerBox button:focus {outline:0;}
-			.playerBox button:active {
-			  border: 1px solid #000000;
-			  background-color: #dddd88;
-			  color: #666666;
-			}
-			.playerBox button[disabled] {
-			  border: 1px solid #999999;
-			  background-color: #cccccc;
-			  color: #666666;
-			}
-		
-			.gameArea {
-				display: flex;
-				border: 1px solid #999999;
-			}
 		</style>
 	</head>
 	<body>
@@ -121,63 +15,6 @@
 
 	<script>
 		document.getElementById("startGame").addEventListener("click", newGame);
-
 	</script>
-<!-- 	<div class="gameArea">
-		<div class="playerBox">
-			<div class="playAreaSpacer"></div>
-			
-			<div class="drawPile">
-				<div class="card back"></div>
-			</div>
-			<button disabled="true">Press Q</button>
-			<div class="playerName">Player 1 Prince Abulhassan</div>
-		</div> -->
-<!-- 		<div class="playerBox">
-			<div class="playAreaSpacer"></div>
-			
-			<div class="drawPile">
-				<div class="card back"></div>
-			</div>
-			<button disabled="true">Press Q</button>
-			<div class="playerName">Player 1 Prince Abulhassan</div>
-		</div> -->
-
-		<!-- <div class="card back"></div> -->
-<!-- 				<div class="card face red">
-			<p class="value">10</p>
-			<span class="suit">♦</span>
-		</div>
-		<div class="card face">
-			<p class="value">10</p>
-			<span class="suit">♣</span>
-		</div>
-
-		<div class="card face red">
-			<p class="valueOld">K</p>
-			<span class="suitOld">♥</span>
-		</div>
-		<div class="card face">
-			<p class="valueOld">A</p>
-			<span class="suitOld">♠</span>
-		</div>
-		<div class="card face red">
-			<p class="valueNew">10</p>
-			<span class="suitNew">♦</span>
-		</div>
-		<div class="card face">
-			<p class="valueNew">10</p>
-			<span class="suitNew">♣</span>
-		</div>
-		<div class="card face red">
-			<p class="valueNew">10</p>
-			<span class="suitNew">♥</span>
-		</div>
-		<div class="card face">
-			<p class="valueNew">10</p>
-			<span class="suitNew">♠</span>
-		</div>
-	</div> -->
-
 	</body>
 </html>

@@ -148,6 +148,7 @@ function newDeck() {
 	class Card {
 		constructor(value, suit)  {
 			this.value = deckValue[value];
+			this.deckValue = value;
 			this.suit = suit;
 			this.name = value + " of " + this.suit.name;
 		} 
@@ -354,6 +355,35 @@ class GameOfWar {
 		}
 	}
 
+	_displayCardPlayed(playerIndex) {
+
+	// 		<div class="card face red">
+	// 			<p class="value">10</p>
+	// 			<span class="suit">♦</span>
+	//		</div>
+
+		let UI_playerDiv = document.getElementById('player_' + playerIndex);
+		let UI_playArea = UI_playerDiv.querySelector('.playAreaSpacer');
+		let card = this.cardsPlayed[playerIndex];
+		
+		let UI_card = document.createElement('div');
+		UI_card.classList.add('card');
+		UI_card.classList.add('face');
+		UI_card.classList.add(card.suit.color);
+		
+		let UI_cardValue = document.createElement('p');
+		UI_cardValue.classList.add('value');
+		UI_cardValue.innerHTML =  card.deckValue;
+		UI_card.appendChild(UI_cardValue);
+
+		let UI_cardSuit = document.createElement('span');
+		UI_cardSuit.classList.add('suit');
+		UI_cardSuit.innerHTML = card.suit.symbol;
+		UI_card.appendChild(UI_cardSuit);
+
+		UI_playArea.appendChild(UI_card);
+	}
+
 	hasPlayedCard(playerIndex) {
 		this.hasYetToPlay.splice(playerIndex, 1);
 		let UI_playerDiv = document.getElementById('player_' + playerIndex);
@@ -361,6 +391,7 @@ class GameOfWar {
 		let game = this; 
 
 		UI_drawPileDiv.removeEventListener('click', this._playerPlay(playerIndex));
+		this._displayCardPlayed(playerIndex);
 		UI_drawPileDiv.classList.add('inactive');
 	}
 
@@ -369,6 +400,7 @@ class GameOfWar {
 		let UI_drawPileDiv = UI_playerDiv.querySelector('.drawPile');
 		let game = this;
 
+		// this needs a little time to fire or else it gets confused with the hasPlayedCard eventListener
 		setTimeout( function() {
 			UI_drawPileDiv.addEventListener("click", game._playerPlay(playerIndex));
 			UI_drawPileDiv.classList.remove('inactive');

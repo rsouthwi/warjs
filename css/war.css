@@ -32,6 +32,9 @@
 	padding: 6px;
 	height: 80px;
 }
+.discardPile {
+	height: 120px;
+}
 
 .none { 
 	display: inline-block; 
