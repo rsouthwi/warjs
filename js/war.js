@@ -84,7 +84,7 @@ class Player {
 		this._canPlayThisRound = true;
 		playerOutDispatcher.registerPlayer(this);
 		cardWatcher.willPlayCards(this);
-		let thisPlayer = this;
+		this.playAreaSpacer;  // this is a reference to the div where cards are displayed
 	}
 
 	set isActive(stateChange) {
@@ -142,6 +142,11 @@ class Player {
 	pickUpCards(cardsWon) {
 		this.discardPile = [...this.discardPile, ...cardsWon]
 	}
+
+	clearAreaSpacer() {
+		this.playAreaSpacer.style.transition = '2.0s';
+		this.playAreaSpacer.style.opacity = 0;
+	}
 }
 
 function newDeck() {
@@ -195,7 +200,7 @@ class GameOfWar {
 				this.activePlayers.push(this.players[i]);
 				this.canPlayCard(i);
 			}
-		}	
+		}
 		this.hasYetToPlay = this.activePlayers.slice();
 	}
 
@@ -275,6 +280,7 @@ class GameOfWar {
 			let playAreaSpacer = document.createElement('div');
 			playAreaSpacer.className = "playAreaSpacer";
 			playerBox.appendChild(playAreaSpacer);
+			this.players[i].playAreaSpacer = playAreaSpacer;
 
 			let playerName = document.createElement('div');
 			playerName.className = "playerName";
@@ -399,13 +405,28 @@ class GameOfWar {
 		let UI_playerDiv = document.getElementById('player_' + playerIndex);
 		let UI_drawPileDiv = UI_playerDiv.querySelector('.drawPile');
 		let game = this;
+		if (game.players[playerIndex].playAreaSpacer.innerHTML === "") {
+			setTimeout( function() {
+				UI_drawPileDiv.addEventListener("click", game._playerPlay(playerIndex));
+				UI_drawPileDiv.classList.remove('inactive');
+				game.players[playerIndex].canPlayThisRound = true;
+			}, 100)			
+		} else {
+			// this is buggy... we should fire our own event instead of depending on transitionend eventlistener
+	        this.activePlayers[0].playAreaSpacer.addEventListener("transitionend", 
+		        function() {
+					// this needs a little time to fire or else it gets confused with the hasPlayedCard eventListener
+					setTimeout( function() {
+						UI_drawPileDiv.addEventListener("click", game._playerPlay(playerIndex));
+						UI_drawPileDiv.classList.remove('inactive');
+						game.players[playerIndex].canPlayThisRound = true;
+						game.players[playerIndex].playAreaSpacer.innerHTML = "";
+						game.players[playerIndex].playAreaSpacer.style.opacity = 1;
+					}, 100)
+		        });      
+			game.players[playerIndex].clearAreaSpacer();
+		}
 
-		// this needs a little time to fire or else it gets confused with the hasPlayedCard eventListener
-		setTimeout( function() {
-			UI_drawPileDiv.addEventListener("click", game._playerPlay(playerIndex));
-			UI_drawPileDiv.classList.remove('inactive');
-			game.players[playerIndex].canPlayThisRound = true;
-		}, 100)
 	}
 
 	conductWar(players) {
