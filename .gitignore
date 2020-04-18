@@ -1,2 +1,4 @@
 .idea/
 .jshintrc
+.cache
+node_modules
