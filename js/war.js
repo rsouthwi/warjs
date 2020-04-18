@@ -122,9 +122,9 @@ class Player {
 		
 		if (!this._inWar) {
 			this.canPlayThisRound = false;
-			cardWatcher.playsCard(this, card)
+			cardWatcher.playsCard(this, card);
 		} else {
-			return card
+			return card;
 		}
 	}
 
@@ -210,7 +210,7 @@ class GameOfWar {
 
 	createPlayers() {
 		let game = this;
-		let numberOfPlayers = window.prompt("Enter Number of Players", 2)
+		let numberOfPlayers = window.prompt("Enter Number of Players", 2);
 		let integerOfPlayers = parseInt(numberOfPlayers, 10);
 		if (!Number.isInteger(integerOfPlayers) ||
 			integerOfPlayers < 2 ||
